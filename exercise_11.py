@@ -6,4 +6,4 @@ print 'How much do you weigh?',
 weigh = raw_input()
 
 print 'So you\'re %r old, %r tall and %r heavy.' % (
-    age, height, weigh)
+    age, height, weigh))
