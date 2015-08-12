@@ -1,1 +1,1 @@
-Python exercises of learnpythonthehardway.org
+Python exercises of learnpythonthehardway.org.
