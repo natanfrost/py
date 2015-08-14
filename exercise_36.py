@@ -97,7 +97,8 @@ def bow_chest_room():
     while True:
         answer = int(raw_input(print_choices(choices_bow_chest_room)))
 
-        remove_option(answer, choices_bow_chest_room)
+        if answer == 2 and 'GOLDEN KEY' in my_itens:
+            remove_option(answer, choices_bow_chest_room)
 
         if answer == 2:
             try_chest()
