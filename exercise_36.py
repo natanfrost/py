@@ -1,3 +1,5 @@
+import exercise_36_drawings
+
 my_itens = []
 
 choice_goblin_key = {1: 'pick', 2: 'nah. I think i\'ll go back to the prev room.' }
@@ -8,7 +10,8 @@ choices_start_room = {1: 'center',
 
 choices_bow_chest_room = {1: 'verify portrait.',
                           2: 'verify chest',
-                          3: 'go through the door in the left distant corner'}
+                          3: 'go through the door in the left distant corner',
+                          4: 'go back to main entrance'}
 
 choices_globlin_encounter = {1: 'crush him with your feet',
                              2: 'scream out loud to see if it run away',
@@ -16,13 +19,13 @@ choices_globlin_encounter = {1: 'crush him with your feet',
                              4: 'previous room'}
 
 bow_chest_room_trap = True
-goblin_dead = False 
+goblin_dead = False
 
 def goblin_room():
     if goblin_dead:
         goblin_killed()
 
-    print_goblin()
+    exercise_36_drawings.goblin()
     while True:
         answer = int(raw_input(print_choices(choices_globlin_encounter)))
         # allow player to exit if he came back to this room
@@ -41,59 +44,9 @@ def goblin_room():
 def invalid(operation):
     print 'Invalid operation: %s. Try again, motherfucker.' % operation
 
-def print_key():
-    print """
-    -----------------------------------------------------
-    |You made a huge mess with your foot. But thats ok, |
-    |the goblin's body parts is all over the floor!     |
-    |Behind were the goblin was, you now can see a      |
-    |shiny golden key. Do you pick it up or leave there?|
-    |                                                   |
-    |            ooo,    .---.                          |
-    |           o`  o   /    |\________________         |
-    |          o`   'oooo()  | ________   _   _)        |
-    |          `oo   o` \    |/        | | | |          |
-    |            `ooo'   `---'         "-" |_|          |
-    |                                       hjw         |
-    |                    [GOLDEN KEY]                   |
-    -----------------------------------------------------
-    """
-
-def print_goblin():
-    print """
-    -------------------------------------------------------------------
-    | You face a furious (very little) goblin.                        |
-    | He is too small that acually you could crush him with your foot.|
-    | What do you do?                                                 |
-    -------------------------------------------------------------------
-
-                   (    )
-                  ((((()))
-                  |o\ /o)|
-                  ( (  _')
-                   (._.  /\__
-                  ,\___,/ '  ')
-    '.,_,,       (  .- .   .    )
-     \   \\     ( '        )(    )
-      \   \\    \.  _.__ ____( .  |
-       \  /\\   .(   .'  /\  '.  )
-        \(  \\.-' ( /    \/    \)
-         '  ()) _'.-|/\/\/\/\/\|
-             '\\ .( |\/\/\/\/\/|
-               '((  \    /\    /
-               ((((  '.__\/__.')
-                ((,) /   ((()   )
-                 "..-,  (()("   /
-            pils  _//.   ((() ."
-          _____ //,/" ___ ((( ', ___
-                           ((  )
-                            / /
-                          _/,/'
-                        /,/,"
-    """
 
 def goblin_killed():
-    print_key()
+    exercise_36_drawings.golden_key()
 
     answer = int(raw_input(print_choices(choice_goblin_key)))
 
@@ -120,30 +73,35 @@ def remove_option(option, choices_list):
     except:
         invalid(option)
 
+def try_chest():
+    print bow_chest_room_trap
+    if not bow_chest_room_trap and 'GOLDEN KEY' in my_itens:
+        print 'You just used you GOLDEN KEY and discarded it'
+        print 'Congratulations, you just found the DEMON BOW OF ETERNITY!'
+        my_itens.remove('GOLDEN KEY')
+        tip('Keys are excenssial to go on in this game. You can open chests, doors and maybe a gate to hell.')
+        my_itens.append('DEMON BOW OF ETERNITY')
+
+        del choices_bow_chest_room[2]
+    elif bow_chest_room_trap:
+        dead('Arrows came in every direction and pierce all your vital organs. It seems you activate a trap, thats bad.')
+    else:
+        print "This chest needs a key but you have none. Try to find out where is this key first."
+
 def bow_chest_room():
+    global bow_chest_room_trap
     print '----------------------------------------------------------------'
-    print "In this room there is a %s." % ','.join(choices_bow_chest_room)
+    print "In this room you can %s." % ', '.join(choices_bow_chest_room.values())
     print '----------------------------------------------------------------'
+
     while True:
         answer = int(raw_input(print_choices(choices_bow_chest_room)))
 
         remove_option(answer, choices_bow_chest_room)
 
         if answer == 2:
-            if not bow_chest_room_trap and 'GOLDEN KEY' in my_itens:
-                print 'You just used you GOLDEN KEY and discarded it'
-                print 'Congratulations, you just found the DEMON BOW OF ETERNITY!'
-                my_itens.remove('GOLDEN KEY')
-                tip('Keys are excenssial to go on in this game. You can open chests, doors and maybe a gate to hell.')
-                my_itens.append('DEMON BOW OF ETERNITY')
-
-                del choices_bow_chest_room[2]
-            elif bow_chest_room_trap:
-                dead('Arrows came in every direction and pierce all your vital organs. It seems you activate a trap, thats bad.')
-            else:
-                print "This chest needs a key but you have none. Try to find out where is this key first."
+            try_chest()
         elif answer == 1:
-            choices_bow_chest_room.remove('a portrait')
             bow_chest_room_trap = False
             print "You heard a 'click' and nothing happens. Well, since your alive it is something."
         elif answer == 4:
@@ -153,7 +111,7 @@ def bow_chest_room():
                 go_to_hall()
             else:
                 dead('Arrows came in every direction and pierce all your vital organs. It seems you activate a trap, thats bad.')
-        elif answer == "itens":
+        elif answer == "items":
             show_itens()
 
 def go_to_hall():
@@ -161,7 +119,6 @@ def go_to_hall():
     exit(0)
 
 def show_itens():
-    global my_itens
     print '----------------------------------------------------------------'
     for item in my_itens:
         print item
@@ -196,7 +153,7 @@ def verify_start_doors():
         print "There is just one door left, go ahead."
 
 def start(restarted):
-    tip("you can always type 'itens' and see what itens you've got so far.")
+    tip("you can always type 'items' and see what itens you've got so far.")
 
     welcome_start(restarted)
 
@@ -208,8 +165,8 @@ def start(restarted):
         elif choice == 3:
             bow_chest_room()
         elif choice == 1:
-            dead("You stumble around the room until you starve.")
-        elif choice == "itens":
+            go_to_hall()
+        elif choice == "items":
             show_itens()
 
 start(False)
