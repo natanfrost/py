@@ -1,4 +1,5 @@
 import exercise_36_drawings
+import exercise_36_choices as choices
 
 my_itens = []
 
