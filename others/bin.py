@@ -1,14 +1,16 @@
+# -*- coding: utf-8 -*-
+
 from requests import get
 from json import loads
-from io import open
+#from io import open
 
-path ='/home/diamond/Documents/stupid_codes/bins.txt'
-save_path = '/home/diamond/Documents/stupid_codes/bins_verificados.txt'
+path ='/home/diamond/Documents/py/others/bins.txt'
+save_path = '/home/diamond/Documents/py/others/bins_verificados.txt'
 
 def verifica_bins():
-    f = io.open(path, 'r', encoding='utf-8')
+    f = open(path, 'r')
     count = 1
-    new_file = io.open(save_path, 'wt', encoding='utf-8')
+    new_file = open(save_path, 'w')
     for line in f:
         print count
         count += 1
@@ -29,4 +31,4 @@ def get_bank(bin):
             retorno = 'NAO ENCONTRADO'
     else:
         retorno = 'NAO ENCONTRADO'
-    return '%s;%s\n' % (bin.rstrip(), retorno)
+    return '%s\t%s\n' % (bin.rstrip(), retorno)
