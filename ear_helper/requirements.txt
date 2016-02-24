@@ -1,0 +1,2 @@
+sudo apt-get install libavbin-dev libavbin0
+sudo apt-get install pyglet
