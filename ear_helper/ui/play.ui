@@ -11,22 +11,15 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Nothing </string>
+   <string>Form</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <widget class="QPushButton" name="btnPlay">
+      <widget class="QPushButton" name="btnPlayChord">
        <property name="text">
         <string>Play chord</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QDialogButtonBox" name="buttonBox">
-       <property name="standardButtons">
-        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
        </property>
       </widget>
      </item>

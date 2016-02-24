@@ -1,14 +1,17 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/player.ui'
+# Form implementation generated from reading ui file 'ui/play.ui'
 #
-# Created: Wed Feb 24 16:44:06 2016
+# Created: Wed Feb 24 17:17:56 2016
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt4 import QtCore, QtGui
-import sys
+import pygame
+from pygame import mixer, display, event
+from os import path
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:
@@ -23,12 +26,7 @@ except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
-class Ui_Form(QtGui.QWidget):
-    def __init__(self, parent=None):
-        QtGui.QWidget.__init__(self, parent)
-        self.ui = Ui_Widget
-        self.ui.setupUi(self)
-
+class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.resize(400, 300)
@@ -36,24 +34,31 @@ class Ui_Form(QtGui.QWidget):
         self.horizontalLayout.setObjectName(_fromUtf8("horizontalLayout"))
         self.verticalLayout = QtGui.QVBoxLayout()
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
-        self.btnPlay = QtGui.QPushButton(Form)
-        self.btnPlay.setObjectName(_fromUtf8("btnPlay"))
-        self.verticalLayout.addWidget(self.btnPlay)
-        self.buttonBox = QtGui.QDialogButtonBox(Form)
-        self.buttonBox.setStandardButtons(QtGui.QDialogButtonBox.Cancel|QtGui.QDialogButtonBox.Ok)
-        self.buttonBox.setObjectName(_fromUtf8("buttonBox"))
-        self.verticalLayout.addWidget(self.buttonBox)
+        self.btnPlayChord = QtGui.QPushButton(Form)
+        self.btnPlayChord.setObjectName(_fromUtf8("btnPlayChord"))
+        self.verticalLayout.addWidget(self.btnPlayChord)
         self.horizontalLayout.addLayout(self.verticalLayout)
 
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(_translate("Form", "Nothing ", None))
-        self.btnPlay.setText(_translate("Form", "Play chord", None))
+        Form.setWindowTitle(_translate("Form", "Form", None))
+        self.btnPlayChord.setText(_translate("Form", "Play chord", None))
+        self.btnPlayChord.clicked.connect(self.play_note)
 
-if __name__ == '__main__':
+    def play_note(self):
+        notes_folder = path.dirname(path.abspath(__file__)) + '/notes/{note}.mp3'
+        mixer.init()
+        mixer.music.load(notes_folder.format(note='a'))
+        mixer.music.play()
+
+
+if __name__ == "__main__":
+    import sys
     app = QtGui.QApplication(sys.argv)
-    ex = Ui_Form()
-    ex.show()
+    Form = QtGui.QWidget()
+    ui = Ui_Form()
+    ui.setupUi(Form)
+    Form.show()
     sys.exit(app.exec_())
