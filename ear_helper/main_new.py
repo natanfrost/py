@@ -1,7 +1,12 @@
-import sys
-from random import choice
-from events import Events
-events = Events(5, choice('abcdefg'))
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'ui/play.ui'
+#
+# Created: Thu Feb 25 17:08:08 2016
+#      by: PyQt4 UI code generator 4.11.3
+#
+# WARNING! All changes made in this file will be lost!
+
 from PyQt4 import QtCore, QtGui
 
 try:
@@ -19,44 +24,6 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Form(QtGui.QWidget):
-
-    def keyPressEvent(self, event):
-        if event.key() == QtCore.Qt.Key_A:
-            result = events.check_note('a')
-        elif event.key() == QtCore.Qt.Key_B:
-            result = events.check_note('b')
-        elif event.key() == QtCore.Qt.Key_C:
-            result = events.check_note('c')
-        elif event.key() == QtCore.Qt.Key_D:
-            result = events.check_note('d')
-        elif event.key() == QtCore.Qt.Key_E:
-            result = events.check_note('e')
-        elif event.key() == QtCore.Qt.Key_F:
-            result = events.check_note('f')
-        elif event.key() == QtCore.Qt.Key_G:
-            result = events.check_note('g')
-        elif event.key() == QtCore.Qt.Key_Space:
-            events.play_note(events.current_note)  # repete a nota
-
-        if events.down_counter == 0: # acabou
-             resultado = events.calculate_result()
-             msgBox = QtGui.QMessageBox()
-             msgBox.setText('You have scored %s%%' % str(resultado))
-             msgBox.exec_()
-
-#    def setupUi(self, Form):
-#        Form.setObjectName(("Form"))
-#        Form.resize(400, 300)
-#        self.horizontalLayout = QtGui.QHBoxLayout(Form)
-#        self.horizontalLayout.setObjectName(("horizontalLayout"))
-#        self.verticalLayout = QtGui.QVBoxLayout()
-#        self.verticalLayout.setObjectName(("verticalLayout"))
-#        self.btnPlayChord = QtGui.QPushButton(Form)
-#        self.btnPlayChord.setObjectName(("btnPlayChord"))
-#        self.verticalLayout.addWidget(self.btnPlayChord)
-#        self.horizontalLayout.addLayout(self.verticalLayout)
-#        self.btnPlayChord.clicked.connect(self.play_current_note)
-
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.resize(391, 300)
@@ -83,8 +50,7 @@ class Ui_Form(QtGui.QWidget):
         self.btn_shortcuts = QtGui.QPushButton(Form)
         self.btn_shortcuts.setObjectName(_fromUtf8("btn_shortcuts"))
         self.verticalLayout.addWidget(self.btn_shortcuts, QtCore.Qt.AlignRight)
-        self.btn_play_chord.clicked.connect(self.play_current_note)
-        self.btn_shortcuts.clicked.connect(self.open_shortcuts)
+
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -93,18 +59,8 @@ class Ui_Form(QtGui.QWidget):
         self.btn_play_chord.setText(_translate("Form", "Play chord again (OR PRESS SPACE BAR)", None))
         self.btn_shortcuts.setText(_translate("Form", "Shorcuts", None))
 
-    def play_current_note(self):
-        events.play_note(events.current_note)
-
-    def open_shortcuts(self):
-        from frm_shortcuts import Ui_frm_shortcuts
-        app = QtGui.QWidget(self)
-        form = Ui_frm_shortcuts()
-        form.setupUi(form)
-        form.show()
-        sys.exit(app.exec_())
-
 if __name__ == "__main__":
+    import sys
     app = QtGui.QApplication(sys.argv)
     Form = Ui_Form()
     Form.setupUi(Form)
