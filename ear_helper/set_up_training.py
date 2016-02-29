@@ -31,7 +31,7 @@ class Ui_Form(QtGui.QDialog):
     def __init__(self, parent=None):
         super(Ui_Form, self).__init__(parent)
         self.setupUi(self)
-        self.prepared = False
+        self.prepared = 0
 
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
@@ -56,21 +56,23 @@ class Ui_Form(QtGui.QDialog):
         self.txt_quantity.setMaxLength(2)
         self.txt_quantity.setAlignment(QtCore.Qt.AlignCenter)
         self.txt_quantity.setObjectName(_fromUtf8("txt_quantity"))
+        self.txt_quantity.setValidator(QtGui.QIntValidator(0, 99, self))
+        self.txt_quantity.setText('0')
+        self.txt_quantity.selectAll()
         self.horizontalLayout.addWidget(self.txt_quantity)
         self.btn_start = QtGui.QPushButton(self.horizontalLayoutWidget)
         self.btn_start.setObjectName(_fromUtf8("btn_start"))
         self.btn_start.clicked.connect(self.update_btn_play_chord_text)
         self.horizontalLayout.addWidget(self.btn_start)
 
-
         self.retranslateUi(Form)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def update_btn_play_chord_text(self):
         if self.txt_quantity.text() == '':
-            self.prepared = False
+            self.prepared = 0
         else:
-            self.prepared = True
+            self.prepared = (int)(self.txt_quantity.text())
         self.close()
 
     def get_prepared(self):

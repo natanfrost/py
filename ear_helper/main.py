@@ -22,19 +22,26 @@ class Ui_Form(QtGui.QWidget):
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_A:
-            result = events.check_note('a')
+            self.lbl_result.setText(events.check_note('a'))
+            self.lbl_chord.setText('A')
         elif event.key() == QtCore.Qt.Key_B:
-            result = events.check_note('b')
+            self.lbl_result.setText(events.check_note('b'))
+            self.lbl_chord.setText('B')
         elif event.key() == QtCore.Qt.Key_C:
-            result = events.check_note('c')
+            self.lbl_result.setText(events.check_note('c'))
+            self.lbl_chord.setText('C')
         elif event.key() == QtCore.Qt.Key_D:
-            result = events.check_note('d')
+            self.lbl_result.setText(events.check_note('d'))
+            self.lbl_chord.setText('D')
         elif event.key() == QtCore.Qt.Key_E:
-            result = events.check_note('e')
+            self.lbl_result.setText(events.check_note('e'))
+            self.lbl_chord.setText('E')
         elif event.key() == QtCore.Qt.Key_F:
-            result = events.check_note('f')
+            self.lbl_result.setText(events.check_note('f'))
+            self.lbl_chord.setText('F')
         elif event.key() == QtCore.Qt.Key_G:
-            result = events.check_note('g')
+            self.lbl_result.setText(events.check_note('g'))
+            self.lbl_chord.setText('G')
         elif event.key() == QtCore.Qt.Key_Space:
             events.play_note(events.current_note)  # repete a nota
 
@@ -43,30 +50,36 @@ class Ui_Form(QtGui.QWidget):
              msgBox = QtGui.QMessageBox()
              msgBox.setText('You have scored %s%%' % str(resultado))
              msgBox.exec_()
+             self.btn_play_chord.setText(_translate("Form", "Set up training", None))
 
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
         Form.resize(391, 300)
         self.verticalLayout = QtGui.QVBoxLayout(Form)
         self.verticalLayout.setObjectName(_fromUtf8("verticalLayout"))
+
         self.lbl_result = QtGui.QLabel(Form)
         font = QtGui.QFont()
         font.setPointSize(20)
         self.lbl_result.setFont(font)
         self.lbl_result.setText(_fromUtf8(""))
         self.lbl_result.setObjectName(_fromUtf8("lbl_result"))
-        self.verticalLayout.addWidget(self.lbl_result, QtCore.Qt.AlignHCenter)
+        self.lbl_result.setAlignment(QtCore.Qt.AlignCenter)
+        self.verticalLayout.addWidget(self.lbl_result)
+
         self.btn_play_chord = QtGui.QPushButton(Form)
         self.btn_play_chord.setObjectName(_fromUtf8("btn_play_chord"))
         self.verticalLayout.addWidget(self.btn_play_chord)
+
         self.lbl_chord = QtGui.QLabel(Form)
         font = QtGui.QFont()
         font.setPointSize(20)
         self.lbl_chord.setFont(font)
-        self.lbl_chord.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.lbl_chord.setText(_fromUtf8(""))
         self.lbl_chord.setObjectName(_fromUtf8("lbl_chord"))
-        self.verticalLayout.addWidget(self.lbl_chord, QtCore.Qt.AlignHCenter)
+        self.lbl_chord.setAlignment(QtCore.Qt.AlignCenter)
+        self.verticalLayout.addWidget(self.lbl_chord)
+
         self.btn_shortcuts = QtGui.QPushButton(Form)
         self.btn_shortcuts.setObjectName(_fromUtf8("btn_shortcuts"))
         self.verticalLayout.addWidget(self.btn_shortcuts, QtCore.Qt.AlignRight)
@@ -85,9 +98,10 @@ class Ui_Form(QtGui.QWidget):
             from set_up_training import Ui_Form
             Dialog = Ui_Form()
             Dialog.exec_()
-            if Dialog.get_prepared() == True:
-                print 'cheguei aqui'
+            if Dialog.get_prepared() != 0:
+                print Dialog.get_prepared()
                 self.btn_play_chord.setText("Play again")
+                events.set_up_training(Dialog.get_prepared())
         else:
             events.play_note(events.current_note)
 

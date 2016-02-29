@@ -15,6 +15,7 @@ class Events:
         self.quantity = quantity # quantity of times it will execute de training
         self.down_counter = quantity # counter till its finished the training
         self.hits = 0 # number of right choices
+        self.play_random_note()
 
     def play_note(self, note):
         mixer.init()
@@ -32,7 +33,7 @@ class Events:
         self.play_random_note() # play next random note
         if note == self.current_note:
             self.hits = self.hits + 1
-        return self.current_note
+        return self.current_note.upper()
 
     def calculate_result(self):
         return  (float)((self.hits * 100) / self.quantity)
