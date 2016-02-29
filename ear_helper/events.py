@@ -4,13 +4,17 @@ from random import choice
 
 class Events:
 
-    def __init__(self, quantity, first_note):
+    def __init__(self):
         self.notes_folder = path.dirname(path.abspath(__file__)) + '/notes/{note}.mp3'
         self.current_note = ''
+        self.quantity = 0
+        self.down_counter = 0
         self.hits = 0
-        self.quantity = quantity
-        self.down_counter = quantity
-        self.play_note(first_note)
+
+    def set_up_training(self, quantity):
+        self.quantity = quantity # quantity of times it will execute de training
+        self.down_counter = quantity # counter till its finished the training
+        self.hits = 0 # number of right choices
 
     def play_note(self, note):
         mixer.init()
@@ -25,7 +29,7 @@ class Events:
 
     def check_note(self, note):
         self.down_counter = self.down_counter - 1 # decrementa o contador que eh quem controla a finalizacao do processo
-        self.play_random_note() # toca proxima nota
+        self.play_random_note() # play next random note
         if note == self.current_note:
             self.hits = self.hits + 1
         return self.current_note
