@@ -44,13 +44,19 @@ class Ui_Form(QtGui.QWidget):
             self.lbl_chord.setText('G')
         elif event.key() == QtCore.Qt.Key_Space:
             events.play_note(events.current_note)  # repete a nota
-
+        self.display_result()
         if events.down_counter == 0: # acabou
              resultado = events.calculate_result()
              msgBox = QtGui.QMessageBox()
              msgBox.setText('You have scored %s%%' % str(resultado))
              msgBox.exec_()
              self.btn_play_chord.setText(_translate("Form", "Set up training", None))
+
+    def display_result(self):
+        if self.lbl_chord.text() == self.lbl_result.text():
+            self.lbl_result.setStyleSheet('QLabel {color: green}')
+        else:
+            self.lbl_result.setStyleSheet('QLabel {color: red}')
 
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))

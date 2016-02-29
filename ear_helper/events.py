@@ -30,9 +30,10 @@ class Events:
 
     def check_note(self, note):
         self.down_counter = self.down_counter - 1 # decrementa o contador que eh quem controla a finalizacao do processo
-        self.play_random_note() # play next random note
         if note == self.current_note:
             self.hits = self.hits + 1
+        if self.down_counter != 0:
+            self.play_random_note() # play next random note
         return self.current_note.upper()
 
     def calculate_result(self):
