@@ -13,6 +13,7 @@ from main import Ui_Form
 main = Ui_Form()
 from events import Events
 events = Events()
+
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
 except AttributeError:

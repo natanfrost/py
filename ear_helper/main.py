@@ -1,8 +1,12 @@
 import sys
+import time
+import json
+from os import path
 from random import choice
 from events import Events
 events = Events()
 from PyQt4 import QtCore, QtGui
+from result import Result
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -22,41 +26,51 @@ class Ui_Form(QtGui.QWidget):
 
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_A:
-            self.lbl_result.setText(events.check_note('a'))
-            self.lbl_chord.setText('A')
+            self.display_result('A', events.check_note('a'))
         elif event.key() == QtCore.Qt.Key_B:
-            self.lbl_result.setText(events.check_note('b'))
-            self.lbl_chord.setText('B')
+            self.display_result('B', events.check_note('b'))
         elif event.key() == QtCore.Qt.Key_C:
-            self.lbl_result.setText(events.check_note('c'))
-            self.lbl_chord.setText('C')
+            self.display_result('C', events.check_note('c'))
         elif event.key() == QtCore.Qt.Key_D:
-            self.lbl_result.setText(events.check_note('d'))
-            self.lbl_chord.setText('D')
+            self.display_result('D', events.check_note('d'))
         elif event.key() == QtCore.Qt.Key_E:
-            self.lbl_result.setText(events.check_note('e'))
-            self.lbl_chord.setText('E')
+            self.display_result('E', events.check_note('e'))
         elif event.key() == QtCore.Qt.Key_F:
-            self.lbl_result.setText(events.check_note('f'))
-            self.lbl_chord.setText('F')
+            self.display_result('F', events.check_note('f'))
         elif event.key() == QtCore.Qt.Key_G:
-            self.lbl_result.setText(events.check_note('g'))
-            self.lbl_chord.setText('G')
+            self.display_result('G', events.check_note('g'))
         elif event.key() == QtCore.Qt.Key_Space:
             events.play_note(events.current_note)  # repete a nota
-        self.display_result()
+
         if events.down_counter == 0: # acabou
              resultado = events.calculate_result()
              msgBox = QtGui.QMessageBox()
              msgBox.setText('You have scored %s%%' % str(resultado))
+             msgBox.setWindowTitle('Final result')
              msgBox.exec_()
+             self.lbl_result.setText('')
+             self.lbl_chord.setText('')
              self.btn_play_chord.setText(_translate("Form", "Set up training", None))
-
-    def display_result(self):
-        if self.lbl_chord.text() == self.lbl_result.text():
-            self.lbl_result.setStyleSheet('QLabel {color: green}')
+             result = Result(events.quantity, events.hits)
+             self.serialize(result)
         else:
-            self.lbl_result.setStyleSheet('QLabel {color: red}')
+            events.play_random_note()
+
+    def serialize(self, object):
+        json_result = json.dumps(object.__dict__, indent=4)
+        caminho = path.dirname(path.abspath(__file__)) + '/results.json'
+        file = open(caminho, 'a')
+        file.write(json_result + '\n')
+        file.close()
+
+    def display_result(self, chord_result, my_chord):
+        self.lbl_result.setText(chord_result)
+        self.lbl_chord.setText(my_chord)
+
+        if self.lbl_chord.text() == self.lbl_result.text():
+            self.lbl_result.setStyleSheet('QLabel { color: green }')
+        else:
+            self.lbl_result.setStyleSheet('QLabel { color: red }')
 
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
