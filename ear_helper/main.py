@@ -1,6 +1,7 @@
 import sys
 import time
 import json
+import xml.etree.ElementTree as ET
 from os import path
 from random import choice
 from events import Events
@@ -63,14 +64,33 @@ class Ui_Form(QtGui.QWidget):
         file.write(json_result + '\n')
         file.close()
 
+
+    def write_xml_estatistic(self, chord, right):
+        tree = ET.parse(path.dirname(path.abspath(__file__)) + '/estatistic.xml')
+        root = tree.getroot()
+        for child in root:
+            if child.attrib['name'] == chord:
+                if right == True:
+                    for acertos in child.iter('right_times'):
+                        acerto = int(acertos.text)
+                        acertos.text = str(acerto + 1)
+                else:
+                    for erros in child.iter('wrong_times'):
+                        erro = int(erros.text)
+                        erros.text = str(erro + 1)
+        tree.write(path.dirname(path.abspath(__file__)) + '/estatistic.xml')
+
+
     def display_result(self, chord_result, my_chord):
         self.lbl_result.setText(chord_result)
         self.lbl_chord.setText(my_chord)
 
         if self.lbl_chord.text() == self.lbl_result.text():
             self.lbl_result.setStyleSheet('QLabel { color: green }')
+            self.write_xml_estatistic(my_chord, True)
         else:
             self.lbl_result.setStyleSheet('QLabel { color: red }')
+            self.write_xml_estatistic(my_chord, False)
 
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
