@@ -1,13 +1,11 @@
 import sys
-import time
 import json
 import xml.etree.ElementTree as ET
 from os import path
-from random import choice
 from events import Events
-events = Events()
 from PyQt4 import QtCore, QtGui
 from result import Result
+events = Events()
 
 try:
     _fromUtf8 = QtCore.QString.fromUtf8
@@ -24,26 +22,13 @@ except AttributeError:
         return QtGui.QApplication.translate(context, text, disambig)
 
 class Ui_Form(QtGui.QWidget):
-
     def keyPressEvent(self, event):
-        if event.key() == QtCore.Qt.Key_A:
-            self.display_result('A', events.check_note('a'))
-        elif event.key() == QtCore.Qt.Key_B:
-            self.display_result('B', events.check_note('b'))
-        elif event.key() == QtCore.Qt.Key_C:
-            self.display_result('C', events.check_note('c'))
-        elif event.key() == QtCore.Qt.Key_D:
-            self.display_result('D', events.check_note('d'))
-        elif event.key() == QtCore.Qt.Key_E:
-            self.display_result('E', events.check_note('e'))
-        elif event.key() == QtCore.Qt.Key_F:
-            self.display_result('F', events.check_note('f'))
-        elif event.key() == QtCore.Qt.Key_G:
-            self.display_result('G', events.check_note('g'))
-        elif event.key() == QtCore.Qt.Key_Space:
-            events.play_note(events.current_note)  # repete a nota
+        if event.key() == QtCore.Qt.Key_Space:
+            events.play_note(events.current_note)  # repeat chord
+        else:
+            self.process_keypress(QtGui.QKeySequence(event.key()).toString())
 
-        if events.down_counter == 0: # acabou
+        if events.down_counter == 0: # finished training
              resultado = events.calculate_result()
              msgBox = QtGui.QMessageBox()
              msgBox.setText('You have scored %s%%' % str(resultado))
@@ -55,7 +40,11 @@ class Ui_Form(QtGui.QWidget):
              result = Result(events.quantity, events.hits)
              self.serialize(result)
         else:
-            events.play_random_note()
+            events.play_random_note() # play next random note
+
+    def process_keypress(self, chord):
+        if chord in ['A', 'B', 'C', 'D', 'E', 'F', 'G']:
+            self.display_result(chord, events.check_note(chord))
 
     def serialize(self, object):
         json_result = json.dumps(object.__dict__, indent=4)
@@ -63,7 +52,6 @@ class Ui_Form(QtGui.QWidget):
         file = open(caminho, 'a')
         file.write(json_result + '\n')
         file.close()
-
 
     def write_xml_estatistic(self, chord, right):
         tree = ET.parse(path.dirname(path.abspath(__file__)) + '/estatistic.xml')
@@ -80,8 +68,7 @@ class Ui_Form(QtGui.QWidget):
                         erros.text = str(erro + 1)
         tree.write(path.dirname(path.abspath(__file__)) + '/estatistic.xml')
 
-
-    def display_result(self, chord_result, my_chord):
+    def display_result(self, my_chord, chord_result):
         self.lbl_result.setText(chord_result)
         self.lbl_chord.setText(my_chord)
 
@@ -129,6 +116,7 @@ class Ui_Form(QtGui.QWidget):
         QtCore.QMetaObject.connectSlotsByName(Form)
 
     def retranslateUi(self, Form):
+        """auidhsaidhsaiudhsaiud."""
         Form.setWindowTitle(_translate("Form", "Ear Training", None))
         self.btn_play_chord.setText(_translate("Form", "Set up training", None))
         self.btn_shortcuts.setText(_translate("Form", "Shorcuts", None))

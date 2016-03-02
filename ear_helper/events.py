@@ -1,6 +1,7 @@
 from pygame import mixer
 from os import path
 from random import choice
+import xml.etree.ElementTree as ET
 
 class Events:
 
@@ -24,8 +25,24 @@ class Events:
         if self.current_note != note:
             self.current_note = note
 
+    def define_random_priority(self):
+        tree = ET.parse(path.dirname(path.abspath(__file__)) + '/estatistic.xml')
+        root = tree.getroot()
+        result = ''
+        for child in root:
+            chord = child.attrib['name']
+            for erros in child.iter('wrong_times'):
+                wrong_times = int(erros.text)
+                if wrong_times == 0:
+                    result += chord
+                else:
+                    result += chord * wrong_times
+        print result
+        return result
+
+
     def play_random_note(self):
-        note = choice('abcdefg')
+        note = choice(self.define_random_priority())
         self.play_note(note)
 
     def check_note(self, note):

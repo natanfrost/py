@@ -1,16 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Form implementation generated from reading ui file 'ui/set_up_training.ui'
-#
-# Created: Fri Feb 26 12:08:05 2016
-#      by: PyQt4 UI code generator 4.11.3
-#
-# WARNING! All changes made in this file will be lost!
-
 from PyQt4 import QtCore, QtGui
-import main
-from main import Ui_Form
-main = Ui_Form()
 from events import Events
 events = Events()
 
