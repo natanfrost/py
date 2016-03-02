@@ -1,30 +1,30 @@
 <estatistic>
   <chord name="A">
-    <wrong_times>4</wrong_times>
-    <right_times>4</right_times>
+    <wrong_times>24</wrong_times>
+    <right_times>15</right_times>
   </chord>
   <chord name="B">
     <wrong_times>3</wrong_times>
-    <right_times>5</right_times>
+    <right_times>17</right_times>
   </chord>
   <chord name="C">
-    <wrong_times>9</wrong_times>
-    <right_times>13</right_times>
+    <wrong_times>20</wrong_times>
+    <right_times>39</right_times>
   </chord>
   <chord name="D">
-    <wrong_times>11</wrong_times>
-    <right_times>10</right_times>
+    <wrong_times>30</wrong_times>
+    <right_times>46</right_times>
   </chord>
   <chord name="E">
-    <wrong_times>7</wrong_times>
-    <right_times>2</right_times>
+    <wrong_times>21</wrong_times>
+    <right_times>21</right_times>
   </chord>
   <chord name="F">
-    <wrong_times>9</wrong_times>
-    <right_times>7</right_times>
+    <wrong_times>18</wrong_times>
+    <right_times>24</right_times>
   </chord>
   <chord name="G">
-    <wrong_times>5</wrong_times>
-    <right_times>4</right_times>
+    <wrong_times>15</wrong_times>
+    <right_times>13</right_times>
   </chord>
 </estatistic>

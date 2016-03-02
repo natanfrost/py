@@ -31,13 +31,13 @@ class Ui_Form(QtGui.QWidget):
         if events.down_counter == 0: # finished training
              resultado = events.calculate_result()
              msgBox = QtGui.QMessageBox()
-             msgBox.setText('You have scored %s%%' % str(resultado))
+             msgBox.setText('You have scored %s%% \nLongest Streak: %s' % (str(resultado), events.longest_streak))
              msgBox.setWindowTitle('Final result')
              msgBox.exec_()
              self.lbl_result.setText('')
              self.lbl_chord.setText('')
              self.btn_play_chord.setText(_translate("Form", "Set up training", None))
-             result = Result(events.quantity, events.hits)
+             result = Result(events.quantity, events.hits, events.longest_streak)
              self.serialize(result)
         else:
             events.play_random_note() # play next random note

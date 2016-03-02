@@ -11,6 +11,8 @@ class Events:
         self.quantity = 0
         self.down_counter = 0
         self.hits = 0
+        self.longest_streak = 0
+        self.actual_streak = 0
 
     def set_up_training(self, quantity):
         self.quantity = quantity # quantity of times it will execute de training
@@ -37,7 +39,6 @@ class Events:
                     result += chord
                 else:
                     result += chord * wrong_times
-        print result
         return result
 
 
@@ -49,6 +50,11 @@ class Events:
         self.down_counter = self.down_counter - 1 # decrementa o contador que eh quem controla a finalizacao do processo
         if note == self.current_note:
             self.hits = self.hits + 1
+            self.actual_streak = self.actual_streak  + 1
+            if self.actual_streak > self.longest_streak:
+                self.longest_streak = self.actual_streak
+        else:
+            self.actual_streak = 0
         return self.current_note.upper()
 
     def calculate_result(self):
