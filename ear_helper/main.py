@@ -85,7 +85,7 @@ class Ui_Form(QtGui.QWidget):
         """Display result after user choose a chord."""
         self.lbl_result.setText(chord_result)
         self.lbl_chord.setText(my_chord)
-
+        # compare
         if self.lbl_chord.text() == self.lbl_result.text():
             self.lbl_result.setStyleSheet('QLabel { color: green }')
             self.write_xml_estatistic(my_chord, True)
