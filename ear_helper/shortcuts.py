@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Docstring."""
 from PyQt4 import QtCore, QtGui
 from events import Events
 events = Events()
@@ -11,18 +12,24 @@ except AttributeError:
 
 try:
     _encoding = QtGui.QApplication.UnicodeUTF8
+
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig, _encoding)
 except AttributeError:
     def _translate(context, text, disambig):
         return QtGui.QApplication.translate(context, text, disambig)
 
+
 class Ui_frm_shortcuts(QtGui.QDialog):
+    """Shortcuts form."""
+
     def __init__(self, parent=None):
+        """Constructor."""
         super(Ui_frm_shortcuts, self).__init__(parent)
         self.setupUi(self)
 
     def setupUi(self, frm_shortcuts):
+        """Set up the form UI."""
         frm_shortcuts.setObjectName(_fromUtf8("frm_shortcuts"))
         frm_shortcuts.resize(420, 145)
         frm_shortcuts.setFixedSize(420, 145)
@@ -36,13 +43,16 @@ class Ui_frm_shortcuts(QtGui.QDialog):
         palette = QtGui.QPalette()
         brush = QtGui.QBrush(QtGui.QColor(170, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Active,
+                         QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(170, 0, 0))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Inactive,
+                         QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(137, 134, 129))
         brush.setStyle(QtCore.Qt.SolidPattern)
-        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
+        palette.setBrush(QtGui.QPalette.Disabled,
+                         QtGui.QPalette.WindowText, brush)
         self.label_16.setPalette(palette)
         self.label_16.setObjectName(_fromUtf8("label_16"))
         self.gridLayout_5.addWidget(self.label_16, 3, 0, 1, 1)
@@ -115,14 +125,17 @@ class Ui_frm_shortcuts(QtGui.QDialog):
         self.label_4.setObjectName(_fromUtf8("label_4"))
         self.gridLayout.addWidget(self.label_4, 3, 0, 1, 1)
         self.gridLayout_2.addLayout(self.gridLayout, 0, 0, 1, 1)
-        spacerItem = QtGui.QSpacerItem(40, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
+        spacerItem = QtGui.QSpacerItem(
+            40, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         self.gridLayout_2.addItem(spacerItem, 0, 2, 1, 1)
 
         self.retranslateUi(frm_shortcuts)
         QtCore.QMetaObject.connectSlotsByName(frm_shortcuts)
 
     def retranslateUi(self, frm_shortcuts):
-        frm_shortcuts.setWindowTitle(_translate("frm_shortcuts", "Keyboard Shortcuts", None))
+        """Reapaint UI."""
+        frm_shortcuts.setWindowTitle(_translate(
+            "frm_shortcuts", "Keyboard Shortcuts", None))
         self.label_16.setText(_translate("frm_shortcuts", "PLAY AGAIN", None))
         self.btn_mi.setText(_translate("frm_shortcuts", "MI", None))
         self.btn_fa.setText(_translate("frm_shortcuts", "FA", None))
