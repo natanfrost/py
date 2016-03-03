@@ -53,3 +53,17 @@
     "final_grade": 40.0, 
     "quantity": 5
 }
+{
+    "date": "2016-03-03 17:03", 
+    "longest_streak": 14, 
+    "hits": 75, 
+    "final_grade": 75.0, 
+    "quantity": 99
+}
+{
+    "date": "2016-03-03 17:34", 
+    "longest_streak": 14, 
+    "hits": 16, 
+    "final_grade": 80.0, 
+    "quantity": 20
+}
